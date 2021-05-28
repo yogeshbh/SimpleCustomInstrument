@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<package>
+    <id>com.yuvedha.BookAnalysisInstrument</id>
+    <title>BookAnalysisInstrument</title>
+    <owner>
+        <name>Yogesh Bhople</name>
+    </owner>
+    
+    
+    <os-signpost-interval-schema>
+        <id>bookimage-download</id>
+        <title>Image Download</title>
+        
+        <subsystem>"com.yuvedha.booksapp"</subsystem>
+        <category>"Networking"</category>
+        <name>"Background Image"</name>
+        
+        <start-pattern>
+            <message>"Image name:"?image-name ",Caller:" ?caller-address</message>
+        </start-pattern>
+        <end-pattern>
+            <message>"Status:" ?status",Size:" ?size</message>
+        </end-pattern>
+        
+        <column>
+            <mnemonic>image-name</mnemonic>
+            <title>Image Name</title>
+            <type>string</type>
+            <expression>?image-name</expression>
+        </column>
+        
+        <column>
+            <mnemonic>caller-address</mnemonic>
+            <title>Caller</title>
+            <type>string</type>
+            <expression>?caller-address</expression>
+        </column>
+        
+        <column>
+            <mnemonic>status</mnemonic>
+            <title>Request status</title>
+            <type>string</type>
+            <expression>?status</expression>
+        </column>
+        
+        <column>
+            <mnemonic>image-size</mnemonic>
+            <title>Size</title>
+            <type>size-in-bytes</type>
+            <expression>?size</expression>
+        </column>
+        
+        <column>
+            <mnemonic>impact</mnemonic>
+            <title>Impact</title>
+            <type>event-concept</type>
+            <expression>(if (&gt; ?size 35000)then "High" else "Low")</expression>
+        </column>
+        
+    </os-signpost-interval-schema>
+    
+    <instrument>
+        <id>com.yuvedha.BookAnalysisInstrument.analysis</id>
+        
+        <title>BookAnalysis</title>
+        <category>Behavior</category>
+        <purpose>Book Nework analysis</purpose>
+        <icon>Network</icon>
+        
+        <create-table>
+            <id>image-downloads</id>
+            <schema-ref>bookimage-download</schema-ref>
+        </create-table>
+        
+        <!-- Define graph to draw for your Instrument (optional) -->
+        <graph>
+            <title>Background Images</title>
+            <lane>
+                <title>Images</title>
+                <table-ref>image-downloads</table-ref>
+                <plot-template>
+                    <instance-by>image-name</instance-by>
+                    <label-format>img: %s</label-format>
+                    <value-from>image-name</value-from>
+                    <color-from>impact</color-from>
+                    <label-from>image-size</label-from>
+                </plot-template>
+            </lane>
+        </graph>
+        
+        <!-- Define at least one detail view for your Instrument -->
+        <list>
+            <title>List: Downloads</title>
+            <table-ref>image-downloads</table-ref>
+            <column>start</column>
+            <column>duration</column>
+            <column>status</column>
+            <column>image-name</column>
+            <column>image-size</column>
+        </list>
+        
+        <aggregation>
+            <title>Summery: Downloads Completed</title>
+            <table-ref>image-downloads</table-ref>
+            <slice>
+                <column>status</column>
+                <equals>
+                    <string>Completed</string>
+                </equals>
+            </slice>
+            <hierarchy>
+                <level>
+                    <column>image-name</column>
+                </level>
+            </hierarchy>
+            
+            <column><count/></column>
+            <column>
+                <sum>image-size</sum>
+            </column>
+        </aggregation>
+        
+        <time-slice>
+            <title>Active requests</title>
+            <table-ref>image-downloads</table-ref>
+            <column>start</column>
+            <column>duration</column>
+            <column>image-name</column>
+        </time-slice>
+        
+    </instrument>
+    
+    <template>
+        <import-from-file>BookAnalysis.tracetemplate</import-from-file>
+    </template>
+    <!-- Instruments Developer Help: https://help.apple.com/instruments/developer/mac/current/ -->
+    
+    <!-- MARK: Schema Definitions -->
+    <!-- Define point and interval schemas needed to represent the input and output tables your package will use. -->
+    <!-- Two kinds are available: schemas with automatically generated modelers, and schemas that require custom modelers -->
+    <!--   Generated modelers: 'os-log-point-schema', 'os-signpost-interval-schema', 'ktrace-point-schema', 'ktrace-interval-schema' -->
+    <!--   Custom modeler required: 'point-schema', 'interval-schema' -->
+    <!-- To use existing schemas from other packages, declare 'import-schema' elements -->
+    
+    <!-- MARK: Modeler Declarations -->
+    <!-- If there are schemas defined that require a custom modeler, each can be declared with a 'modeler' element -->
+    <!-- Modelers are based on CLIPS rules and may define 1..n output schemas, each requiring 1..n input schemas -->
+    
+    <!-- MARK: Instrument Definitions -->
+    <!-- Instruments record and display data, creating concrete table requirements that instance modelers and data streams. -->
+    <!-- Any number of 'instrument' elements can be defined; each instrument should provide a cohesive graph and detail experience. -->
+    
+    <!-- MARK: Embed Templates -->
+    <!-- Templates may be included and represent a collection of tools configured for a specific tracing workflow -->
+    <!-- Each 'template' element specifies the relative path to a .tracetemplate file in the project -->
+    <!-- To create a template: start with a blank document, configure with instruments desired, and choose "File -> Save as Template" -->
+</package>
