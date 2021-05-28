@@ -66,6 +66,46 @@
 			path = BookAnalysisInstrument;
 			sourceTree = "<group>";
 		};
+		94E17FAA2660F1130076E5C5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				942F2658264E91EF0076CD7B /* Book.swift */,
+				945E63B5264FD07B0003D050 /* booksdata.json */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		94E17FAB2660F1350076E5C5 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				942F2652264E53060076CD7B /* HomeViewController.swift */,
+				942F2654264E53850076CD7B /* HomeTableViewCell.swift */,
+				94ED695F26511B9100FA618B /* BookDetailsViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		94E17FAC2660F1690076E5C5 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				94FF9DB3264D836B006F5B9E /* ImageDownloader.swift */,
+				942F2656264E81D30076CD7B /* EndPoint.swift */,
+				94ED695D265102C400FA618B /* SignpostLog.swift */,
+				94ED6961265120D000FA618B /* ImageCache.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		94E17FAD2660F1890076E5C5 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				94FF9DA5264D814D006F5B9E /* Main.storyboard */,
+				94FF9DA8264D815F006F5B9E /* Assets.xcassets */,
+				94FF9DAA264D815F006F5B9E /* LaunchScreen.storyboard */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
 		94FF9D93264D814D006F5B9E = {
 			isa = PBXGroup;
 			children = (
@@ -87,21 +127,13 @@
 		94FF9D9E264D814D006F5B9E /* Books */ = {
 			isa = PBXGroup;
 			children = (
+				94E17FAD2660F1890076E5C5 /* resources */,
+				94E17FAC2660F1690076E5C5 /* Utility */,
+				94E17FAB2660F1350076E5C5 /* UI */,
+				94E17FAA2660F1130076E5C5 /* Model */,
 				94FF9D9F264D814D006F5B9E /* AppDelegate.swift */,
 				94FF9DA1264D814D006F5B9E /* SceneDelegate.swift */,
-				94FF9DA5264D814D006F5B9E /* Main.storyboard */,
-				94FF9DA8264D815F006F5B9E /* Assets.xcassets */,
-				94FF9DAA264D815F006F5B9E /* LaunchScreen.storyboard */,
 				94FF9DAD264D815F006F5B9E /* Info.plist */,
-				94FF9DB3264D836B006F5B9E /* ImageDownloader.swift */,
-				942F2652264E53060076CD7B /* HomeViewController.swift */,
-				942F2654264E53850076CD7B /* HomeTableViewCell.swift */,
-				942F2656264E81D30076CD7B /* EndPoint.swift */,
-				942F2658264E91EF0076CD7B /* Book.swift */,
-				945E63B5264FD07B0003D050 /* booksdata.json */,
-				94ED695D265102C400FA618B /* SignpostLog.swift */,
-				94ED695F26511B9100FA618B /* BookDetailsViewController.swift */,
-				94ED6961265120D000FA618B /* ImageCache.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
